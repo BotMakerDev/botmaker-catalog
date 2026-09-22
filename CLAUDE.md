@@ -13,8 +13,9 @@ from a single-array layout that did not have them:
 
 - **Two submissions never conflict.** Two authors adding two plugins touch two files.
 - **Id uniqueness is git's.** A second `plugins/com.example.discord.json` cannot exist, so the `id` check's
-  "already claimed" arm is a property of the layout rather than of a check that could be forgotten. Value
-  type ids are *not* filenames, so those still need the scan — that is `Registry.claimedValueTypeIds`.
+  "already claimed" arm is a property of the layout rather than of a check that could be forgotten. (Value
+  type ids needed a scan of every entry until 2026-09-23; a type is its Java class now, and entries no
+  longer list types.)
 
 `index.json` must stay at exactly its current path. Studio reads it from
 `raw.githubusercontent.com/BotMakerDev/botmaker-plugin-registry/main/index.json`, and a shipped Studio has

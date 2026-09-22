@@ -116,7 +116,7 @@ jobs:
           #
           # If a host ever bundles a plugin again, name it here as a COORDINATE, not as a list of ids: the
           # gate resolves it and asks the plugin, so nothing here has to be kept in step with somebody
-          # else's value types. Name every bundled coordinate in one comma-separated value — they go on ONE
+          # else's plugin ids. Name every bundled coordinate in one comma-separated value — they go on ONE
           # classpath, because a bundled plugin's own dependency may be `optional` and so not transitive,
           # and a classpath missing it is one that plugin cannot be constructed from. Pin them, for the same
           # reason BOTMAKER_CLI_VERSION is pinned.
