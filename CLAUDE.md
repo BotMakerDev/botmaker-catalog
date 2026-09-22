@@ -46,7 +46,7 @@ the same thing.**
 
 **If a host bundles a plugin again, name it as a coordinate, never as a list of ids.** The gate resolves the
 coordinate and asks the plugin; a list of ids in this repository would be a second answer to a question the
-plugin already answers, and would drift the first time a value type was added. Name every bundled coordinate
+plugin already answers, and would drift the first time the plugin changed. Name every bundled coordinate
 in one comma-separated value: they go on **one** classpath, because a bundled plugin's own dependency may be
 `optional` and so not transitive, and a classpath missing it is one that plugin cannot be constructed from.
 (The worked example was the SDK's own toolkit dependency, `optional` until SDK v1.1.5.)

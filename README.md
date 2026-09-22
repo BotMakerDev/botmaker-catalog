@@ -15,9 +15,9 @@ botmaker publish --repo me/my-plugin --description "…" --tags notifications
 ```
 
 `botmaker publish` forks this repository, writes `plugins/<plugin-id>.json` and opens the pull request. The
-entry is composed from what the plugin already says about itself — its id, its display name, the value type
-ids it registers, the contract version its pom declares — because a human retyping those is a human putting a
-typo in the registry's primary key.
+entry is composed from what the plugin already says about itself — its id, its display name, the contract
+version its pom declares — because a human retyping those is a human putting a typo in the registry's
+primary key.
 
 Install the CLI from [botmaker-cli](https://github.com/BotMakerDev/botmaker-cli).
 
@@ -47,7 +47,6 @@ A pull request that edits `index.json` is refused, naming the entry file to writ
   "description": "Sends a message when a bot finishes",
   "tags": ["notifications"],
   "minContractVersion": "1.0.0",
-  "valueTypeIds": ["discord.channel"],
   "verifiedVersion": "v0.1.0",
   "verifiedAt": "2026-08-28"
 }
@@ -56,6 +55,9 @@ A pull request that edits `index.json` is refused, naming the entry file to writ
 `coordinate` carries no version: the index names a plugin, not a release, and Studio resolves the version to
 install the same way it resolves the SDK's. `verifiedVersion` is the version the checks last actually ran
 against — a date with no artifact beside it would say nothing.
+
+An entry written before 2026-09-23 may still carry `valueTypeIds`. Nothing reads it any more and nothing
+rewrites the file; the generated `index.json` simply stops carrying it.
 
 ## The gate
 
@@ -69,20 +71,19 @@ author could not have seen coming is exactly what the gate exists to prevent.
 | `classpath` | the published coordinate resolves and every entry exists |
 | `loads` | `ServiceLoader` finds at least one `StudioPlugin` through the real loader |
 | `id` | the id is well formed, and claimed by no other entry and by no plugin Studio itself ships |
-| `palette` | `catalog(pin).problems()` is empty and every entry names a real public member |
-| `value-types` | no `ValueType` id collides with one another entry — or the BotMaker SDK — already registers |
+| `palette` | `catalog().problems()` is empty and every entry names a real public member |
+| `value-types` | every declared type answers a class and a fresh value, no class is declared by two plugins on the classpath, and a component type puts its fresh value back together from its own parts |
 | `editors` | `slotEditors()` builds and every predicate answers without throwing |
-| `pom-scopes` | `botmaker-studio-api` is `provided`; `botmaker-plugin-toolkit` is not |
+| `pom-scopes` | `botmaker-studio-api` is `provided` or `compile`; `botmaker-plugin-toolkit` is not `provided` |
 
-Two of those — `id` and `value-types` — can only be answered here, because only this repository knows what is
-already claimed. That is why a clean local run says so rather than promising the pull request will pass.
-"Already claimed" is two sets: every other entry in `plugins/`, and the plugins BotMaker itself ships (the
-SDK owns `com.botmaker.sdk` and seventeen value type ids, including the bare `TEXT`, `NUMBER` and the rest,
-which are the names every project ever written already holds). **Prefix your ids with something that is
-yours** and neither can bite you.
+One of those — `id` — can only be answered here, because only this repository knows what is already
+claimed. That is why a clean local run says so rather than promising the pull request will pass. "Already
+claimed" is two sets: every other entry in `plugins/`, and the plugins BotMaker itself ships. **Prefix your
+id with something that is yours** and it cannot bite you.
 
-A value type id is written into project files and can never be corrected afterwards, which is why the
-collision check is a refusal and not a warning.
+`value-types` used to be the second, over string ids a plugin chose. Since 2026-09-23 a type is its class,
+named by its own package, so two plugins can only meet over one when they are loaded together — and a
+plugin the submission depends on is loaded beside it here.
 
 ## Removing a plugin
 
