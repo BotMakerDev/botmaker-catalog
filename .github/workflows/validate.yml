@@ -73,7 +73,7 @@ jobs:
               </repositories>
               <dependencies>
                   <dependency>
-                      <groupId>com.github.LiQiyeDev</groupId>
+                      <groupId>com.github.BotMakerDev</groupId>
                       <artifactId>botmaker-cli</artifactId>
                       <version>${env.BOTMAKER_CLI_VERSION}</version>
                   </dependency>

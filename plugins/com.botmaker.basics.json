@@ -1,7 +1,7 @@
 {
   "id" : "com.botmaker.basics",
   "name" : "BotMaker Basics",
-  "coordinate" : "com.github.LiQiyeDev:botmaker-plugin-basics",
+  "coordinate" : "com.github.BotMakerDev:botmaker-plugin-basics",
   "repo" : "BotMakerDev/botmaker-plugin-basics",
   "description" : "The nine JDK value types, and the store a plugin keeps its files in.",
   "tags" : [ "values", "store", "official" ],

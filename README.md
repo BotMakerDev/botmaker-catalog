@@ -61,7 +61,7 @@ rewrites the file; the generated `index.json` simply stops carrying it.
 
 ## The gate
 
-`.github/workflows/validate.yml` resolves `com.github.LiQiyeDev:botmaker-cli` — its **main** artifact, the
+`.github/workflows/validate.yml` resolves `com.github.BotMakerDev:botmaker-cli` — its **main** artifact, the
 library — and calls `com.botmaker.cli.registry.RegistryGate`. **The code is not in this repository on
 purpose:** it must be the same code the author already ran, because a submission that fails for a reason its
 author could not have seen coming is exactly what the gate exists to prevent.

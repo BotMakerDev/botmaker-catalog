@@ -24,7 +24,7 @@ spells the owner `LiQiyeDev`; `GitHubConfig.registryIndexRawUrls()` tries both, 
 
 ## The gate is not in this repository, and that is not an oversight
 
-`validate.yml` resolves `com.github.LiQiyeDev:botmaker-cli`'s **main** artifact — the library, with no
+`validate.yml` resolves `com.github.BotMakerDev:botmaker-cli`'s **main** artifact — the library, with no
 picocli in it — and calls `com.botmaker.cli.registry.RegistryGate`. The rule from `botmaker-cli/CLAUDE.md`
 applies from this side too: **a rule added here is a rule the plugin's author cannot run**, and a submission
 that fails for a reason its author could not have seen coming is the experience the gate exists to prevent.

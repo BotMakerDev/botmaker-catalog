@@ -1,7 +1,7 @@
 {
   "id" : "com.botmaker.sdk",
   "name" : "BotMaker SDK",
-  "coordinate" : "com.github.LiQiyeDev:botmaker-sdk",
+  "coordinate" : "com.github.BotMakerDev:botmaker-sdk",
   "repo" : "BotMakerDev/botmaker-sdk",
   "description" : "The BotMaker SDK — the palette, the slot editors and the bot runtime.",
   "tags" : [ "sdk", "palette", "vision", "input", "official" ],
