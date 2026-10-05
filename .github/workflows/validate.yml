@@ -98,8 +98,9 @@ jobs:
           # builds a *tag* on demand, and this module's own poms carry the cosmetic 0.0.0-SNAPSHOT that
           # JitPack overrides with the tag, so a branch build is not the artifact the author's own
           # `botmaker validate` runs. v0.0.11 is the first release that also distinguishes an empty bundled
-          # set from a missing one — see BOTMAKER_BUNDLED_PLUGINS below.
-          BOTMAKER_CLI_VERSION: v0.0.12
+          # set from a missing one — see BOTMAKER_BUNDLED_PLUGINS below. The gate's contract is the CLI's, so
+          # it must be at least the contract a submitted plugin was built on: v0.1.3 carries contract v0.3.1.
+          BOTMAKER_CLI_VERSION: v0.1.3
 
       - name: Run the gate
         env:
