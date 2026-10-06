@@ -56,8 +56,8 @@ in one comma-separated value: they go on **one** classpath, because a bundled pl
 `BOTMAKER_BUNDLED_PLUGINS` in `validate.yml`), not floating. A verdict must not change under a pull request
 that is already open; bump either in a pull request of its own. `BOTMAKER_CLI_VERSION` is a **released tag**
 and not `main-SNAPSHOT`, which is what it said until 2026-09-05 and which never resolved: JitPack builds a
-tag on demand and serves the artifact under that tag, and this project's poms carry the cosmetic
-`0.0.0-SNAPSHOT` JitPack overrides — so a branch build is not the artifact the author's own
+tag on demand and serves the artifact under that tag, and this project's poms carry a `-SNAPSHOT` on
+`main` — so a branch build is not the artifact the author's own
 `botmaker validate` runs, which is the one property this whole arrangement exists to guarantee.
 
 ## Changed paths never reach a shell
