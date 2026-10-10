@@ -2,7 +2,7 @@
   {
     "id": "com.botmaker.basics",
     "name": "BotMaker Basics",
-    "coordinate": "com.github.LiQiyeDev:botmaker-plugin-basics",
+    "coordinate": "com.github.BotMakerDev:botmaker-plugin-basics",
     "repo": "BotMakerDev/botmaker-plugin-basics",
     "description": "The nine JDK value types, and the store a plugin keeps its files in.",
     "tags": [
@@ -22,13 +22,13 @@
       "TIME_OF_DAY",
       "DURATION"
     ],
-    "verifiedVersion": "v0.0.1",
-    "verifiedAt": "2026-09-17"
+    "verifiedVersion": "v0.3.2",
+    "verifiedAt": "2026-10-10"
   },
   {
     "id": "com.botmaker.sdk",
     "name": "BotMaker SDK",
-    "coordinate": "com.github.LiQiyeDev:botmaker-sdk",
+    "coordinate": "com.github.BotMakerDev:botmaker-sdk",
     "repo": "BotMakerDev/botmaker-sdk",
     "description": "The BotMaker SDK — the palette, the slot editors and the bot runtime.",
     "tags": [
@@ -53,7 +53,7 @@
       "io.javalin:javalin:6.7.0",
       "com.google.zxing:core:3.5.3"
     ],
-    "verifiedVersion": "v1.1.7",
-    "verifiedAt": "2026-09-17"
+    "verifiedVersion": "v1.4.1",
+    "verifiedAt": "2026-10-10"
   }
 ]
