@@ -53,7 +53,7 @@
       "io.javalin:javalin:6.7.0",
       "com.google.zxing:core:3.5.3"
     ],
-    "verifiedVersion": "v1.4.1",
+    "verifiedVersion": "v1.4.2",
     "verifiedAt": "2026-10-10"
   }
 ]
