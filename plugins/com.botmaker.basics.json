@@ -7,6 +7,6 @@
   "tags" : [ "values", "store", "official" ],
   "minContractVersion" : "v0.1.0",
   "valueTypeIds" : [ "TEXT", "YES_NO", "WHOLE_NUMBER", "DECIMAL_NUMBER", "CHARACTER", "COLOR", "DATE", "TIME_OF_DAY", "DURATION" ],
-  "verifiedVersion" : "v0.0.1",
-  "verifiedAt" : "2026-09-17"
+  "verifiedVersion" : "v0.3.2",
+  "verifiedAt" : "2026-10-10"
 }
