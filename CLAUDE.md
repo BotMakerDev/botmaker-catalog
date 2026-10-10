@@ -13,8 +13,9 @@ from a single-array layout that did not have them:
 
 - **Two submissions never conflict.** Two authors adding two plugins touch two files.
 - **Id uniqueness is git's.** A second `plugins/com.example.discord.json` cannot exist, so the `id` check's
-  "already claimed" arm is a property of the layout rather than of a check that could be forgotten. Value
-  type ids are *not* filenames, so those still need the scan — that is `Registry.claimedValueTypeIds`.
+  "already claimed" arm is a property of the layout rather than of a check that could be forgotten. (Value
+  type ids needed a scan of every entry until 2026-09-23; a type is its Java class now, and entries no
+  longer list types.)
 
 `index.json` must stay at exactly its current path. Studio reads it from
 `raw.githubusercontent.com/BotMakerDev/botmaker-plugin-registry/main/index.json`, and a shipped Studio has
@@ -23,7 +24,7 @@ spells the owner `LiQiyeDev`; `GitHubConfig.registryIndexRawUrls()` tries both, 
 
 ## The gate is not in this repository, and that is not an oversight
 
-`validate.yml` resolves `com.github.LiQiyeDev:botmaker-cli`'s **main** artifact — the library, with no
+`validate.yml` resolves `com.github.BotMakerDev:botmaker-cli`'s **main** artifact — the library, with no
 picocli in it — and calls `com.botmaker.cli.registry.RegistryGate`. The rule from `botmaker-cli/CLAUDE.md`
 applies from this side too: **a rule added here is a rule the plugin's author cannot run**, and a submission
 that fails for a reason its author could not have seen coming is the experience the gate exists to prevent.
@@ -46,7 +47,7 @@ the same thing.**
 
 **If a host bundles a plugin again, name it as a coordinate, never as a list of ids.** The gate resolves the
 coordinate and asks the plugin; a list of ids in this repository would be a second answer to a question the
-plugin already answers, and would drift the first time a value type was added. Name every bundled coordinate
+plugin already answers, and would drift the first time the plugin changed. Name every bundled coordinate
 in one comma-separated value: they go on **one** classpath, because a bundled plugin's own dependency may be
 `optional` and so not transitive, and a classpath missing it is one that plugin cannot be constructed from.
 (The worked example was the SDK's own toolkit dependency, `optional` until SDK v1.1.5.)
@@ -55,8 +56,8 @@ in one comma-separated value: they go on **one** classpath, because a bundled pl
 `BOTMAKER_BUNDLED_PLUGINS` in `validate.yml`), not floating. A verdict must not change under a pull request
 that is already open; bump either in a pull request of its own. `BOTMAKER_CLI_VERSION` is a **released tag**
 and not `main-SNAPSHOT`, which is what it said until 2026-09-05 and which never resolved: JitPack builds a
-tag on demand and serves the artifact under that tag, and this project's poms carry the cosmetic
-`0.0.0-SNAPSHOT` JitPack overrides — so a branch build is not the artifact the author's own
+tag on demand and serves the artifact under that tag, and this project's poms carry a `-SNAPSHOT` on
+`main` — so a branch build is not the artifact the author's own
 `botmaker validate` runs, which is the one property this whole arrangement exists to guarantee.
 
 ## Changed paths never reach a shell
