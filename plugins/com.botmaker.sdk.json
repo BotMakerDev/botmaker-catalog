@@ -8,6 +8,6 @@
   "minContractVersion" : "v0.0.4",
   "valueTypeIds" : [ "IMAGE_TEMPLATE", "PRECISION", "POINT", "RECT", "SIZE", "DIRECTION", "KEY", "MOUSE_BUTTON" ],
   "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ],
-  "verifiedVersion" : "v1.1.7",
-  "verifiedAt" : "2026-09-17"
+  "verifiedVersion" : "v1.4.1",
+  "verifiedAt" : "2026-10-10"
 }
