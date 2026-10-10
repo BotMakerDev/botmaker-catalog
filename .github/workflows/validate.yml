@@ -97,8 +97,10 @@ jobs:
           # A released tag rather than main-SNAPSHOT, which is what stood here and never resolved: JitPack
           # builds a *tag* on demand, and this module's own poms carry a -SNAPSHOT on main, so a branch build is not the artifact the author's own
           # `botmaker validate` runs. v0.0.11 is the first release that also distinguishes an empty bundled
-          # set from a missing one — see BOTMAKER_BUNDLED_PLUGINS below.
-          BOTMAKER_CLI_VERSION: v0.0.12
+          # set from a missing one — see BOTMAKER_BUNDLED_PLUGINS below. v0.0.12 judged every plugin on an
+          # entry's classpath as that entry's own, so the SDK, which brings basics, "claimed" basics' id and
+          # value types and failed; v0.3.0 judges only the plugin an entry is about.
+          BOTMAKER_CLI_VERSION: v0.3.0
 
       - name: Run the gate
         env:
