@@ -10,11 +10,11 @@ program somebody wrote.
 ## Submitting a plugin
 
 ```bash
-botmaker validate                       # the same checks this repository runs
-botmaker publish --repo me/my-plugin --description "…" --tags notifications
+botmaker plugin validate                # the same checks this repository runs
+botmaker plugin publish --repo me/my-plugin --description "…" --tags notifications
 ```
 
-`botmaker publish` forks this repository, writes `plugins/<plugin-id>.json` and opens the pull request. The
+`botmaker plugin publish` forks this repository, writes `plugins/<plugin-id>.json` and opens the pull request. The
 entry is composed from what the plugin already says about itself — its id, its display name, the contract
 version its pom declares — because a human retyping those is a human putting a typo in the registry's
 primary key.
@@ -38,6 +38,8 @@ A pull request that edits `index.json` is refused, naming the entry file to writ
 
 ## An entry
 
+An example:
+
 ```json
 {
   "id": "com.example.discord",
@@ -56,34 +58,24 @@ A pull request that edits `index.json` is refused, naming the entry file to writ
 install the same way it resolves the SDK's. `verifiedVersion` is the version the checks last actually ran
 against — a date with no artifact beside it would say nothing.
 
-An entry written before 2026-09-23 may still carry `valueTypeIds`. Nothing reads it any more and nothing
-rewrites the file; the generated `index.json` simply stops carrying it.
+An older entry may still carry `valueTypeIds`. Nothing reads it any more and nothing rewrites the file; the
+generated `index.json` simply stops carrying it.
 
 ## The gate
 
 `.github/workflows/validate.yml` resolves `com.github.BotMakerDev:botmaker-cli` — its **main** artifact, the
-library — and calls `com.botmaker.cli.registry.RegistryGate`. **The code is not in this repository on
-purpose:** it must be the same code the author already ran, because a submission that fails for a reason its
-author could not have seen coming is exactly what the gate exists to prevent.
+library — at the release the workflow names, and calls `com.botmaker.cli.registry.RegistryGate`. **The code
+is not in this repository on purpose:** it must be the same code the author already ran, because a
+submission that fails for a reason its author could not have seen coming is exactly what the gate exists to
+prevent. The checks are that release's: `BOTMAKER_CLI_VERSION` in the workflow pins it, so a verdict does
+not change under an open pull request, and the pin moves in a pull request of its own.
+[botmaker-cli's README](https://github.com/BotMakerDev/botmaker-cli#readme) lists the checks on its `main`
+under `botmaker plugin validate`; the pinned release may run fewer.
 
-| check | passes when |
-|---|---|
-| `classpath` | the published coordinate resolves and every entry exists |
-| `loads` | `ServiceLoader` finds at least one `StudioPlugin` through the real loader |
-| `id` | the id is well formed, and claimed by no other entry and by no plugin Studio itself ships |
-| `palette` | `catalog().problems()` is empty and every entry names a real public member |
-| `value-types` | every declared type answers a class and a fresh value, no class is declared by two plugins on the classpath, and a component type puts its fresh value back together from its own parts |
-| `editors` | `slotEditors()` builds and every predicate answers without throwing |
-| `pom-scopes` | `botmaker-studio-api` is `provided` or `compile`; `botmaker-plugin-toolkit` is not `provided` |
-
-One of those — `id` — can only be answered here, because only this repository knows what is already
-claimed. That is why a clean local run says so rather than promising the pull request will pass. "Already
-claimed" is two sets: every other entry in `plugins/`, and the plugins BotMaker itself ships. **Prefix your
-id with something that is yours** and it cannot bite you.
-
-`value-types` used to be the second, over string ids a plugin chose. Since 2026-09-23 a type is its class,
-named by its own package, so two plugins can only meet over one when they are loaded together — and a
-plugin the submission depends on is loaded beside it here.
+One of them — `id` — can only be answered here, because only this repository knows what is already claimed:
+every other entry in `plugins/`, plus any plugin a host bundles (`BOTMAKER_BUNDLED_PLUGINS` in the workflow;
+Studio bundles none, so it is empty). That is why a clean local run says so rather than promising the pull
+request will pass. **Prefix your id with something that is yours** and it cannot bite you.
 
 ## Removing a plugin
 
