@@ -60,10 +60,6 @@ tag on demand and serves the artifact under that tag, and this project's poms ca
 `main` — so a branch build is not the artifact the author's own
 `botmaker validate` runs, which is the one property this whole arrangement exists to guarantee.
 
-**`BOTMAKER_REGISTRY_BASE` is the pull request's base commit** (2026-10-11). The gate reads an updated entry's
-current release from it and checks the submitted release `--against` that one (`managed-history`). Without it,
-the gate warns and skips that check.
-
 ## Changed paths never reach a shell
 
 A pull request chooses its own filenames, so a path is attacker-controlled text. `validate.yml` writes

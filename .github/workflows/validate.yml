@@ -120,11 +120,6 @@ jobs:
           # and a classpath missing it is one that plugin cannot be constructed from. Pin them, for the same
           # reason BOTMAKER_CLI_VERSION is pinned.
           BOTMAKER_BUNDLED_PLUGINS: ""
-          # The registry as it stood before this pull request. An updated entry's release there is the one its
-          # managed values are compared against (managed-history, 2026-10-11): an update that reshapes them
-          # without a conversion would strand the values of every bot on the registered release. A gate older
-          # than the one that reads it ignores it.
-          BOTMAKER_REGISTRY_BASE: ${{ github.event.pull_request.base.sha }}
         run: |
           java -cp "$(cat target/gate-classpath.txt)" \
                com.botmaker.cli.registry.RegistryGate . @target/changed.txt
