@@ -1,48 +1,47 @@
 name: Validate
 
-# THE GATE. It runs the same checks the plugin's author ran locally, and it runs them by resolving
-# `botmaker-cli`'s MAIN artifact — the library, with no picocli and no command line in it — and calling
-# com.botmaker.cli.registry.RegistryGate.
+# THE CHECK. A pull request that passes is merged by automerge.yml with nobody reading it, so this is the only
+# review an entry gets. Every rule is com.botmaker.cli.catalog.EntryGate, resolved from botmaker-cli's published
+# library (tools/resolve-cli.sh) — the same checks `botmaker bot publish` and `botmaker plugin publish` run on the
+# author's machine before they open the pull request.
 #
-# That is the whole design: a submission that fails for a reason its author could not have seen coming is
-# the experience this gate exists to prevent, so the code cannot live here. What this workflow adds is the
-# three things only the registry knows — every other entry's claimed ids, the coordinates of the plugins the
-# host itself ships (BOTMAKER_BUNDLED_PLUGINS, below), and that index.json is generated.
+# THE ENTRY'S OWN CODE RUNS IN THE LAST STEP, and that step holds no token. A plugin's constructor runs in the
+# check's JVM and a bot is compiled with Maven, so EntryGate runs twice: `--part rules` (who controls the
+# repository, the release, the file) with the read-only token, then `--part kind` (the build, the plugin's id)
+# with none. The checkout keeps no credentials either (persist-credentials: false).
 #
-# It is not a security review. A plugin runs arbitrary code inside Studio's process; every check asks
-# whether a plugin WORKS. See README.md.
+# The tools come from the BASE tree (main), never the pull request's: one that edits tools/ or a workflow still
+# gets a check, but it is not one entry file, so automerge.yml never merges it.
+#
+# It is not a security review. A bot or a plugin is a Java program somebody wrote; see README.md.
 
 on:
   pull_request:
-    paths:
-      - 'plugins/**'
-      - 'index.json'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
+  # The job id is what tools/entry-facts.sh looks for among a commit's check runs. Renaming it is a change there.
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
-          # The merge commit's parent, so `git diff` below is the pull request's own changes and not
-          # everything since the branch point.
           fetch-depth: 0
+          persist-credentials: false
 
-      # No `cache: maven`. It keys the cache on **/pom.xml and fails the job outright when there is none —
-      # `No file in … matched to [**/pom.xml], make sure you have checked out the target repository` — and
-      # this is a data repository, which is the whole point of it. The pom the gate needs is written a step
-      # later, into target/, so there is nothing here to key on at this point either. Found on the first
-      # real pull request (#1, the SDK's own entry), where it failed before a single check had run.
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '25'
 
-      # Written to a FILE, never into a later `run:` line. A pull request chooses its own filenames, so a
-      # path is attacker-controlled text: interpolating one into a shell command is a command injection, and
-      # a path containing a space would break the argument list even without malice. The gate reads the list
-      # itself, through its `@file` form.
+      # Written to a FILE, never into a later `run:` line. A pull request chooses its own filenames, so the list
+      # is attacker-controlled text; the check reads it itself through its `@file` form.
+      #
+      # The BASE tree beside it, because who controls an existing entry is read from what the catalog holds
+      # today, and the pull request's copy says whatever it likes.
       - name: What this pull request changed
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -50,76 +49,22 @@ jobs:
           mkdir -p target
           git diff --name-only "$BASE_SHA" HEAD > target/changed.txt
           cat target/changed.txt
+          git worktree add --detach target/base "$BASE_SHA"
 
-      # Resolves the CLI as a LIBRARY. `dependency:build-classpath` on a throwaway pom rather than a
-      # checkout: the gate must run the published code, because that is the code the author's own
-      # `botmaker validate` also is.
       - name: Resolve botmaker-cli
-        run: |
-          mkdir -p target
-          cat > target/gate-pom.xml <<'POM'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <project xmlns="http://maven.apache.org/POM/4.0.0">
-              <modelVersion>4.0.0</modelVersion>
-              <groupId>com.botmaker.registry</groupId>
-              <artifactId>gate</artifactId>
-              <version>0-SNAPSHOT</version>
-              <packaging>pom</packaging>
-              <repositories>
-                  <repository>
-                      <id>jitpack.io</id>
-                      <url>https://jitpack.io</url>
-                  </repository>
-              </repositories>
-              <dependencies>
-                  <dependency>
-                      <groupId>com.github.BotMakerDev</groupId>
-                      <artifactId>botmaker-cli</artifactId>
-                      <version>${env.BOTMAKER_CLI_VERSION}</version>
-                  </dependency>
-              </dependencies>
-          </project>
-          POM
-          # An ABSOLUTE outputFile. A relative one resolves against the pom's own basedir, which is
-          # target/ — so `-Dmdep.outputFile=target/gate-classpath.txt` wrote target/target/…, the mvn step
-          # passed (it is -q and it did what it was told), and the next step died with
-          # `cat: target/gate-classpath.txt: No such file or directory` followed by a ClassNotFoundException
-          # for the gate itself. Found on pull request #1.
-          mvn -B -q -f target/gate-pom.xml dependency:build-classpath \
-              -DincludeScope=runtime -Dmdep.outputFile="$GITHUB_WORKSPACE/target/gate-classpath.txt"
-          # The gate must not be reported as missing when what is missing is its classpath.
-          test -s target/gate-classpath.txt
-        env:
-          # Pinned rather than floating: the gate's verdict must not change under a submission that is
-          # already open. Bump it deliberately, in a pull request of its own, so a rule change is a commit
-          # in this repository too.
-          #
-          # A released tag rather than main-SNAPSHOT, which is what stood here and never resolved: JitPack
-          # builds a *tag* on demand, and this module's own poms carry a -SNAPSHOT on main, so a branch build is not the artifact the author's own
-          # `botmaker validate` runs. v0.0.11 is the first release that also distinguishes an empty bundled
-          # set from a missing one — see BOTMAKER_BUNDLED_PLUGINS below.
-          BOTMAKER_CLI_VERSION: v0.0.12
+        run: target/base/tools/resolve-cli.sh target/gate-classpath.txt
 
-      - name: Run the gate
+      - name: The rules (read-only token, no entry code)
         env:
-          # The plugins the HOST ships, whose ids no submission may take. EMPTY, and that is a statement
-          # rather than a disabled check: botmaker-studio has bundled no plugin since 2026-09-02. Every
-          # plugin, the SDK included, is loaded off the open project's own resolved classpath. So there is
-          # no id reserved outside this index, and `com.botmaker.sdk` is claimed the way every other id is —
-          # by plugins/com.botmaker.sdk.json existing, which git itself enforces.
-          #
-          # Empty and UNSET are different, and the gate tells them apart (botmaker-cli v0.0.11 and newer).
-          # Unset warns: nobody said, so a host's own plugins' ids would be unreserved without anyone having
-          # decided that. Empty is silent: this host bundles nothing, and says so. Do not delete the line to
-          # "mean the same thing" — it does not.
-          #
-          # If a host ever bundles a plugin again, name it here as a COORDINATE, not as a list of ids: the
-          # gate resolves it and asks the plugin, so nothing here has to be kept in step with somebody
-          # else's plugin ids. Name every bundled coordinate in one comma-separated value — they go on ONE
-          # classpath, because a bundled plugin's own dependency may be `optional` and so not transitive,
-          # and a classpath missing it is one that plugin cannot be constructed from. Pin them, for the same
-          # reason BOTMAKER_CLI_VERSION is pinned.
-          BOTMAKER_BUNDLED_PLUGINS: ""
+          GH_TOKEN: ${{ github.token }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
-          java -cp "$(cat target/gate-classpath.txt)" \
-               com.botmaker.cli.registry.RegistryGate . @target/changed.txt
+          java -cp "$(cat target/gate-classpath.txt)" com.botmaker.cli.catalog.EntryGate . \
+               --base target/base --author "$AUTHOR" --part rules @target/changed.txt
+
+      - name: The kind's checks (no token; the entry's code runs here)
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          java -cp "$(cat target/gate-classpath.txt)" com.botmaker.cli.catalog.EntryGate . \
+               --base target/base --author "$AUTHOR" --part kind @target/changed.txt

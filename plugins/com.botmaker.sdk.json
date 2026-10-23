@@ -1,13 +1,5 @@
 {
   "id" : "com.botmaker.sdk",
-  "name" : "BotMaker SDK",
-  "coordinate" : "com.github.BotMakerDev:botmaker-sdk",
   "repo" : "BotMakerDev/botmaker-sdk",
-  "description" : "The BotMaker SDK — the palette, the slot editors and the bot runtime.",
-  "tags" : [ "sdk", "palette", "vision", "input", "official" ],
-  "minContractVersion" : "v0.0.4",
-  "valueTypeIds" : [ "IMAGE_TEMPLATE", "PRECISION", "POINT", "RECT", "SIZE", "DIRECTION", "KEY", "MOUSE_BUTTON" ],
-  "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ],
-  "verifiedVersion" : "v1.1.7",
-  "verifiedAt" : "2026-09-17"
+  "tag" : "v1.5.0"
 }

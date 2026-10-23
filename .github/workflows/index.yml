@@ -1,40 +1,65 @@
 name: Index
 
-# Regenerates index.json from plugins/*.json after a merge, and commits it if it changed.
+# Regenerates catalog.json from bots/, plugins/ and publishers.json, and commits it if it changed. It is the only
+# thing that writes catalog.json, and catalog.json is the only file Studio reads.
 #
-# The index is DERIVED, and this job is the only thing that writes it — which is what lets validate.yml
-# refuse a pull request that edits it by hand. Studio reads it straight from raw.githubusercontent.com at a
-# path that must not move: an already-shipped Studio has that URL compiled into it.
+# IT RUNS NO ENTRY'S CODE: com.botmaker.cli.catalog.IndexCommand reads GitHub's facts through the API and each
+# pom at its tag as data, and checks every derived value again. So this job may hold a write token.
+#
+# Nightly as well, because a derived fact (a description, a renamed or deleted repository, a release taken down)
+# changes on GitHub without any commit here. automerge.yml starts it by name after a merge: a merge made with the
+# workflow's own token triggers no `push` workflow, by GitHub's design.
 
 on:
   push:
     branches: [main]
     paths:
+      - 'bots/**'
       - 'plugins/**'
-      - 'tools/build-index.sh'
+      - 'publishers.json'
+      - 'tools/botmaker-cli.version'
+  schedule:
+    - cron: '41 3 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: index
+  cancel-in-progress: false
 
 jobs:
   index:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v7
 
-      - name: Regenerate
-        run: tools/build-index.sh
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '25'
 
-      # `git diff --quiet` rather than committing unconditionally: a no-op commit on every push would make
-      # the file's history say nothing about when the registry actually changed.
+      - name: Resolve botmaker-cli
+        run: tools/resolve-cli.sh "$RUNNER_TEMP/cli-classpath.txt"
+
+      - name: Regenerate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: java -cp "$(cat "$RUNNER_TEMP/cli-classpath.txt")" com.botmaker.cli.catalog.IndexCommand .
+
+      # `git diff --quiet` rather than committing unconditionally: a no-op commit every night would make the
+      # file's history say nothing about when the catalog actually changed. Pulled first because two merges can
+      # land while this runs.
       - name: Commit if it changed
         run: |
-          if git diff --quiet -- index.json; then
-            echo "index.json is already up to date."
+          if [ -z "$(git status --porcelain -- catalog.json)" ]; then
+            echo "catalog.json is already up to date."
             exit 0
           fi
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.json
-          git commit -m "registry: regenerate index.json"
+          git add catalog.json
+          git commit -m "catalog: regenerate catalog.json"
+          git pull --rebase
           git push
