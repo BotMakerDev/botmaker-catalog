@@ -28,6 +28,12 @@ checks="$(gh api "repos/$repo/commits/$sha/check-runs?check_name=validate&per_pa
     [.check_runs[] | select(.status == "completed")] as $runs
     | ($runs | length) > 0 and ($runs | all(.conclusion == "success"))')"
 
+# Whether main's publishers.json is still the copy at the pull request's base, the one the check read: two rank
+# changes on different lines would otherwise merge into a file neither check saw. Blob shas, so equal text is equal.
+base_sha="$(jq -r '.base.sha' <<<"$pr_json")"
+blob_at() { gh api "repos/$repo/contents/publishers.json?ref=$1" --jq .sha 2>/dev/null || echo "unreadable-$1"; }
+if [ "$(blob_at "$base_sha")" = "$(blob_at main)" ]; then current=true; else current=false; fi
+
 changes="$(gh api --paginate "repos/$repo/pulls/$pr/files?per_page=100" \
     --jq '.[] | {path: .filename, status: .status}' | jq -s -c '.')"
 
@@ -54,5 +60,6 @@ jq -n \
     --arg headSha "$sha" \
     --argjson changes "$changes" \
     --argjson recent "$recent" \
+    --argjson publishersCurrent "$current" \
     '{author: $author, checksPassed: $checksPassed, now: $now, headSha: $headSha, changes: $changes,
-      recentNewEntries: $recent}'
+      recentNewEntries: $recent, publishersCurrent: $publishersCurrent}'

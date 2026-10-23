@@ -7,7 +7,10 @@ name: Auto-merge
 #   wait    the author is over 3 new entries in 24 hours: label `waiting`, one comment saying when. The hourly
 #           run merges it once the window frees.
 #   hold    the check has not passed, or the pull request is not one entry file: nothing. A pull request that
-#           touches publishers.json, tools/ or a workflow is the admin's to merge by hand.
+#           touches tools/ or a workflow is the admin's to merge by hand.
+#
+# A pull request that changes publishers.json alone merges like an entry: the check passes it only when an admin,
+# by account id in main's copy, opened it (2026-10-23, the dashboard's rank edits).
 #
 # THIS JOB HOLDS A TOKEN THAT CAN MERGE, SO IT NEVER CHECKS OUT OR RUNS A PULL REQUEST'S CODE, AND IT RUNS NO
 # ENTRY'S CODE EITHER: ListingPolicy is pure. `workflow_run` and `schedule` run the workflow file on main; the pull

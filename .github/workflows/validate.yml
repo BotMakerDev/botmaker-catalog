@@ -58,9 +58,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           AUTHOR: ${{ github.event.pull_request.user.login }}
+          # The account id, which publishers.json names: an admin may change any entry and the ranks, and an
+          # admin is told by id, since a login can be renamed and then taken.
+          AUTHOR_ID: ${{ github.event.pull_request.user.id }}
         run: |
           java -cp "$(cat target/gate-classpath.txt)" com.botmaker.cli.catalog.EntryGate . \
-               --base target/base --author "$AUTHOR" --part rules @target/changed.txt
+               --base target/base --author "$AUTHOR" --author-id "$AUTHOR_ID" --part rules @target/changed.txt
 
       - name: The kind's checks (no token; the entry's code runs here)
         env:

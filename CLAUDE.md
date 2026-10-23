@@ -13,9 +13,13 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
   already answers.
 - `catalog.json` is the only file Studio reads, at `raw.githubusercontent.com/BotMakerDev/botmaker-catalog/main/
   catalog.json` (`GitHubConfig.catalogRawUrls()` in shared). Its path never moves.
-- A pull request changes exactly one entry file; everything else (`publishers.json`, `tools/`, a workflow) is the
-  admin's, committed by hand. An organisation that releases only from CI (the SDK, basics: `github-actions[bot]`
-  made their releases) fails rule 3 on a pull request, so the admin commits their entries directly.
+- A pull request changes exactly one entry file, or `publishers.json` alone; everything else (`tools/`, a
+  workflow) is the admin's, committed by hand.
+- **An admin may change anyone's entry, and only an admin changes `publishers.json`** (2026-10-23, the dashboard's
+  edits): an admin is the pull request author's account id among `admin` in main's `publishers.json`
+  (`--author-id`), never a login. Rules 3 and 4 pass for an admin; the release must still be published and the
+  kind's checks still run. So the SDK and basics, whose releases `github-actions[bot]` made, are listed by an
+  admin's pull request like any other entry.
 
 ## No rule lives here
 
