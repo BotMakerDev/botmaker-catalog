@@ -28,11 +28,23 @@ checks="$(gh api "repos/$repo/commits/$sha/check-runs?check_name=validate&per_pa
     [.check_runs[] | select(.status == "completed")] as $runs
     | ($runs | length) > 0 and ($runs | all(.conclusion == "success"))')"
 
-# Whether main's publishers.json is still the copy at the pull request's base, the one the check read: two rank
-# changes on different lines would otherwise merge into a file neither check saw. Blob shas, so equal text is equal.
-base_sha="$(jq -r '.base.sha' <<<"$pr_json")"
+# Whether main's publishers.json is still the copy at the merge base of main and the pull request's head: then a
+# merge leaves exactly the head's file, the one the check passed, and two rank changes on different lines can never
+# merge into a file neither check saw. The merge base, not the API's base.sha, which follows main as it moves.
+# Blob shas, so equal text is equal; anything unreadable is "not current".
+author_id="$(jq -r '.user.id' <<<"$pr_json")"
+merge_base="$(gh api "repos/$repo/compare/main...$sha" --jq .merge_base_commit.sha 2>/dev/null || echo unknown)"
 blob_at() { gh api "repos/$repo/contents/publishers.json?ref=$1" --jq .sha 2>/dev/null || echo "unreadable-$1"; }
-if [ "$(blob_at "$base_sha")" = "$(blob_at main)" ]; then current=true; else current=false; fi
+if [ "$merge_base" != unknown ] && [ "$(blob_at "$merge_base")" = "$(blob_at main)" ]; then
+    current=true
+else
+    current=false
+fi
+
+# Whether the author is an admin, by account id, in main's publishers.json now.
+admin="$(gh api "repos/$repo/contents/publishers.json?ref=main" --jq .content 2>/dev/null | base64 -d 2>/dev/null \
+    | jq --argjson id "$author_id" '[.admin[]?.id] | index($id) != null' 2>/dev/null || echo false)"
+[ "$admin" = true ] || admin=false
 
 changes="$(gh api --paginate "repos/$repo/pulls/$pr/files?per_page=100" \
     --jq '.[] | {path: .filename, status: .status}' | jq -s -c '.')"
@@ -61,5 +73,6 @@ jq -n \
     --argjson changes "$changes" \
     --argjson recent "$recent" \
     --argjson publishersCurrent "$current" \
+    --argjson authorAdmin "$admin" \
     '{author: $author, checksPassed: $checksPassed, now: $now, headSha: $headSha, changes: $changes,
-      recentNewEntries: $recent, publishersCurrent: $publishersCurrent}'
+      recentNewEntries: $recent, publishersCurrent: $publishersCurrent, authorAdmin: $authorAdmin}'

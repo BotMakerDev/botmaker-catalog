@@ -10,7 +10,9 @@ name: Auto-merge
 #           touches tools/ or a workflow is the admin's to merge by hand.
 #
 # A pull request that changes publishers.json alone merges like an entry: the check passes it only when an admin,
-# by account id in main's copy, opened it (2026-10-23, the dashboard's rank edits).
+# by account id in main's copy, opened it (2026-10-23, the dashboard's rank edits). It merges only while main's
+# publishers.json is the one its branch was made on and its author is still an admin; an entry checked against
+# older ranks merges only for an author who is an admin now. Those holds are said in the sticky comment.
 #
 # THIS JOB HOLDS A TOKEN THAT CAN MERGE, SO IT NEVER CHECKS OUT OR RUNS A PULL REQUEST'S CODE, AND IT RUNS NO
 # ENTRY'S CODE EITHER: ListingPolicy is pure. `workflow_run` and `schedule` run the workflow file on main; the pull
@@ -106,6 +108,10 @@ jobs:
                       ;;
                   hold)
                       gh pr edit "$pr" --remove-label waiting >/dev/null 2>&1 || true
+                      # A hold the check runs do not show (they are green) is said in the comment.
+                      if [ "$(jq -r '.announce // false' <<<"$decision")" = true ]; then
+                          sticky "$pr" "This pull request passes the catalog's check but is not merged. $reason"
+                      fi
                       ;;
               esac
               echo "::endgroup::"
