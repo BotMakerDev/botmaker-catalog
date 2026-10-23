@@ -17,7 +17,6 @@ on:
       - 'bots/**'
       - 'plugins/**'
       - 'publishers.json'
-      - 'tools/botmaker-cli.version'
   schedule:
     - cron: '41 3 * * *'
   workflow_dispatch:

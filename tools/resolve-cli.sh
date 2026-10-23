@@ -8,16 +8,23 @@
 # `botmaker plugin publish` run the same check on the author's machine, so a refusal here is one they could
 # already have seen.
 #
-# THE VERSION IS tools/botmaker-cli.version, one line, and it is pinned rather than floating: a verdict must
-# not change under a pull request that is already open. An admin bumps it in a commit of its own.
+# THE VERSION IS botmaker-cli's newest GitHub Release, read at each run (2026-10-23, the maintainer's call: no
+# version is stored here). github.com/<repo>/releases/latest redirects to it and skips drafts and prereleases; the
+# redirect is no API call, so it needs no token and meets no rate limit. A cli release therefore reaches open pull
+# requests at their next run, accepted.
 #
 # validate.yml runs the BASE branch's copy of this script, never the pull request's: a pull request that edits
 # tools/ is not one entry file, so it never merges, and it must not choose the code its own check runs either.
 set -euo pipefail
 
 out="$1"
-root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-version="$(tr -d '[:space:]' < "$root/tools/botmaker-cli.version")"
+latest="$(curl -fsSL --retry 3 -o /dev/null -w '%{url_effective}' https://github.com/BotMakerDev/botmaker-cli/releases/latest)"
+version="${latest##*/tag/}"
+# A tag git and a URL both carry as is; anything else is not a release page and must not reach the pom.
+[[ $latest == */tag/* && $version =~ ^[A-Za-z0-9_][A-Za-z0-9._+-]{0,99}$ ]] || {
+    echo "botmaker-cli has no published release ($latest)." >&2
+    exit 1
+}
 work="$(mktemp -d)"
 
 cat > "$work/pom.xml" <<POM

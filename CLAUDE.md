@@ -23,10 +23,10 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
 
 ## No rule lives here
 
-The workflows resolve botmaker-cli's **main** artifact at `tools/botmaker-cli.version` and call `EntryGate`,
-`ListingPolicy` and `IndexCommand`. A rule added here is one the author's `publish` cannot run on their machine
-first: put it in the cli. The version is a **released tag**, pinned so a verdict does not change under an open
-pull request; bump it in a commit of its own.
+The workflows resolve botmaker-cli's **main** artifact at its **newest GitHub Release** (`tools/resolve-cli.sh`)
+and call `EntryGate`, `ListingPolicy` and `IndexCommand`. A rule added here is one the author's `publish` cannot
+run on their machine first: put it in the cli. No cli version is stored here (2026-10-23, the maintainer's call):
+a cli release reaches open pull requests at their next run, accepted over keeping a pin bumped by hand.
 
 ## Which job may hold which token
 
