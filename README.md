@@ -14,7 +14,7 @@ community plugin on a computer.
 ```bash
 botmaker bot publish --repo me/my-bot          # a release, then the pull request adding bots/me__my-bot.json
 botmaker plugin publish --repo me/my-plugin    # the checks, then the pull request adding plugins/<id>.json
-botmaker bot unpublish me/my-bot               # the pull request removing the entry
+botmaker bot unpublish --repo me/my-bot        # the pull request removing the entry
 botmaker plugin unpublish --id <id>
 ```
 
