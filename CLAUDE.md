@@ -28,7 +28,11 @@ pull request; bump it in a commit of its own.
 
 - `validate.yml` runs the entry's code (a plugin's constructor in the check's JVM, a bot's Maven build), so the
   step doing that (`--part kind`) holds **no token**, and the checkout keeps no credentials. `--part rules` holds
-  the read-only token and runs no entry code. The tools come from the base tree, never the pull request's.
+  the read-only token and runs no entry code. The tools come from the base tree, never the pull request's. The
+  kind step's GitHub calls are anonymous (60 an hour per runner), so a rate limit is a false refusal that a re-run
+  clears — never a reason to give that step a token.
+- A plugin's constructor can end the kind step's JVM itself (`System.exit(0)`), skipping the plugin's id and
+  JitPack checks; Studio checks a loaded plugin's id against its entry (accepted 2026-10-23).
 - `automerge.yml` holds the write token, so it checks out only `main` and reads pull requests through the API as
   data (`tools/entry-facts.sh`); `ListingPolicy` is pure.
 - `index.yml` holds the write token and runs no entry code: GitHub's API and each pom read as data.
