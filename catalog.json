@@ -1,0 +1,25 @@
+{
+  "schemaVersion" : 3,
+  "builtAt" : "2026-10-23T20:49:56Z",
+  "plugins" : [ {
+    "id" : "com.botmaker.basics",
+    "repo" : "BotMakerDev/botmaker-plugin-basics",
+    "tag" : "v0.4.0",
+    "rank" : "admin",
+    "coordinate" : "com.github.BotMakerDev:botmaker-plugin-basics",
+    "name" : "BotMaker Basics Plugin",
+    "stars" : 0,
+    "minContractVersion" : "v0.10.0"
+  }, {
+    "id" : "com.botmaker.sdk",
+    "repo" : "BotMakerDev/botmaker-sdk",
+    "tag" : "v1.5.0",
+    "rank" : "admin",
+    "coordinate" : "com.github.BotMakerDev:botmaker-sdk",
+    "name" : "botmaker-sdk",
+    "stars" : 1,
+    "minContractVersion" : "v0.10.0",
+    "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ]
+  } ],
+  "bots" : [ ]
+}
