@@ -8,9 +8,13 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
 
 ## Entries are written by authors, catalog.json by index.yml only
 
-- An entry file holds only what its author decides (`repo`, `tag`, a plugin's `id`, a bot's `detached`). Every
+- An entry file holds only what its author decides (`repo`, `releases`, a plugin's `id`, a bot's `detached`). Every
   other field of `catalog.json` is derived by `IndexCommand`. Never add a field to an entry that GitHub or the pom
-  already answers.
+  already answers; a release's pins (`commit`, a plugin's `jarSha256` and `pomSha256`) are the exception the check
+  recomputes (2026-10-24, the user's call: the bytes approved are the bytes installed).
+- `releases` keeps every approved release, oldest first; a pull request creates the entry, appends one release,
+  removes some or detaches a bot, never edits or reorders one (`EntryGate.Change`). There is no reading of the
+  single `tag` the files held before 2026-10-24 (`docs/superpowers/specs/2026-10-24-easy-publish-design.md`).
 - `catalog.json` is the only file Studio reads, at `raw.githubusercontent.com/BotMakerDev/botmaker-catalog/main/
   catalog.json` (`GitHubConfig.catalogRawUrls()` in shared). Its path never moves.
 - A pull request changes exactly one entry file, or `publishers.json` alone; everything else (`tools/`, a
