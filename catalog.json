@@ -1,25 +1,35 @@
 {
-  "schemaVersion" : 3,
-  "builtAt" : "2026-10-23T20:49:56Z",
+  "schemaVersion" : 4,
+  "builtAt" : "2026-10-24T15:07:41Z",
   "plugins" : [ {
     "id" : "com.botmaker.basics",
     "repo" : "BotMakerDev/botmaker-plugin-basics",
-    "tag" : "v0.4.0",
     "rank" : "admin",
     "coordinate" : "com.github.BotMakerDev:botmaker-plugin-basics",
     "name" : "BotMaker Basics Plugin",
     "stars" : 0,
-    "minContractVersion" : "v0.10.0"
+    "releases" : [ {
+      "tag" : "v0.4.0",
+      "commit" : "de3473b9fd1387e2066d3712bf01de1746949a93",
+      "jarSha256" : "0db3bdca32d230665f3dd1632e381d29ae64ed98c3cbd37480533ca00331531b",
+      "pomSha256" : "83d7602804adb0ae37661375bfd495d9d288b3416684b10d5e59e70b3c509f18",
+      "minContractVersion" : "v0.10.0"
+    } ]
   }, {
     "id" : "com.botmaker.sdk",
     "repo" : "BotMakerDev/botmaker-sdk",
-    "tag" : "v1.5.0",
     "rank" : "admin",
     "coordinate" : "com.github.BotMakerDev:botmaker-sdk",
     "name" : "botmaker-sdk",
     "stars" : 1,
-    "minContractVersion" : "v0.10.0",
-    "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ]
+    "releases" : [ {
+      "tag" : "v1.5.0",
+      "commit" : "8aea5e75b92bced769891f75e43c13cf557a3eb3",
+      "jarSha256" : "41d6904b70eb30ec6b6d9b356b542ea60c99aaefa5e867bf4894d151c4b1700e",
+      "pomSha256" : "3bd438d33a2ff083f4f8425908e018235f8d56a41f7737719368f44e8c858303",
+      "minContractVersion" : "v0.10.0",
+      "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ]
+    } ]
   } ],
   "bots" : [ ]
 }
