@@ -1,5 +1,10 @@
 {
   "id" : "com.botmaker.sdk",
   "repo" : "BotMakerDev/botmaker-sdk",
-  "tag" : "v1.5.0"
+  "releases" : [ {
+    "tag" : "v1.5.0",
+    "commit" : "8aea5e75b92bced769891f75e43c13cf557a3eb3",
+    "jarSha256" : "41d6904b70eb30ec6b6d9b356b542ea60c99aaefa5e867bf4894d151c4b1700e",
+    "pomSha256" : "3bd438d33a2ff083f4f8425908e018235f8d56a41f7737719368f44e8c858303"
+  } ]
 }

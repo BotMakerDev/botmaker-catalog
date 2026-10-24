@@ -1,5 +1,10 @@
 {
   "id" : "com.botmaker.basics",
   "repo" : "BotMakerDev/botmaker-plugin-basics",
-  "tag" : "v0.4.0"
+  "releases" : [ {
+    "tag" : "v0.4.0",
+    "commit" : "de3473b9fd1387e2066d3712bf01de1746949a93",
+    "jarSha256" : "0db3bdca32d230665f3dd1632e381d29ae64ed98c3cbd37480533ca00331531b",
+    "pomSha256" : "83d7602804adb0ae37661375bfd495d9d288b3416684b10d5e59e70b3c509f18"
+  } ]
 }
