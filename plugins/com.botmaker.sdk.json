@@ -16,5 +16,10 @@
     "commit" : "14a81915d1cfa4f50b87f8e8861992bbfb4a2fcd",
     "jarSha256" : "a02165f94ae859351fcd7e26282af23ba62e79261dbefddf587c2bec03ce5906",
     "pomSha256" : "80bed8bdb0f9235a4758ae4a7f63f9a31ebf1fe463edad59e02c4579e54e77bc"
+  }, {
+    "tag" : "v1.7.1",
+    "commit" : "271f1ac289cb67dca97ce535c9419783405f106f",
+    "jarSha256" : "1254499d6952d0fbdc460fec191f3afae7b687f4823cfa5d818724d9153e2553",
+    "pomSha256" : "b314b89fe4fdb96086ffe8e555eee221d1abd9c5747a673217bba142018e69ce"
   } ]
 }
