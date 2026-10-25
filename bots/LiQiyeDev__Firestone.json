@@ -3,5 +3,9 @@
   "releases" : [ {
     "tag" : "1.0.0",
     "commit" : "7f57eb0efd8e2fd12093facf8a6778e67287acd1"
+  }, {
+    "tag" : "1.0.4",
+    "commit" : "9795e38ee38d1c5678a902d14021de18e5f07716",
+    "bmkSha256" : "9a4aacaa4c79198e4918c6dc43c07d7135894379b3f8ef5e1cad86d68434fb97"
   } ]
 }
