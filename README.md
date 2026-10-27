@@ -18,7 +18,7 @@ botmaker bot publish            # the next patch release, then the pull request 
 botmaker plugin publish minor   # patch (the default), minor or major; --tag v1.2.0 names it exactly
 botmaker plugin publish --dry-run                  # the checks and the entry, nothing tagged
 botmaker bot unpublish --repo me/my-bot [--release v1.0.0]   # the pull request removing the entry, or one release
-botmaker plugin unpublish --id <id> [--release v0.3.0]
+botmaker plugin unpublish --repo me/my-plugin [--release v0.3.0]
 ```
 
 Studio's Publish does the same for a bot. Each command runs this repository's checks on your machine first, then
@@ -31,7 +31,7 @@ stay listed. Install the CLI from [botmaker-cli](https://github.com/BotMakerDev/
 ```
 bots/<owner>__<repo>.json   { "repo": "owner/name", "releases": [{ "tag": "v1.2.0", "commit": "<sha>" }] },
                             optionally "detached": true
-plugins/<id>.json           { "id": "com.x.y", "repo": "owner/name",
+plugins/<owner>__<repo>.json { "repo": "owner/name",
                               "releases": [{ "tag": "v0.3.0", "commit": "<sha>",
                                              "jarSha256": "<hex>", "pomSha256": "<hex>" }] }
 publishers.json             ranks, by GitHub account id; changed by an admin's pull request only
@@ -46,8 +46,9 @@ moved or a jar rebuilt afterwards no longer matches, and Studio refuses it. Ever
 (name, description, topics, stars, the fork's parent, a plugin's contract version, a bot's plugins) is read from
 GitHub and from the pom at each pinned commit, as data, by `index.yml`.
 
-A plugin's file is named by its id, so git keeps one file — one owner — per id. A bot's file joins owner and
-repository with `__`, since a GitHub login holds no underscore.
+Every entry's file joins owner and repository with `__`, since a GitHub login holds no underscore, so git keeps
+one file per repository. A plugin has no id of its own (since 2026-10-27): its pom's `groupId:artifactId`, which
+JitPack serves as `com.github.<owner>:<repo>`, is the plugin.
 
 ## The check
 
@@ -62,8 +63,8 @@ repository with `__`, since a GitHub login holds no underscore.
 5. the approved release is published, not a draft or a prerelease, and its tag points at the pinned commit;
 
 and, on the approved release only, for a bot: its pom at the pinned commit declares a catalog plugin at a released
-version, it compiles, and it has a `main`; for a plugin: `botmaker plugin validate`'s checks pass, the jar's id is
-the entry's `id`, and JitPack serves the coordinate with a jar and pom that hash to the pins.
+version, it compiles, and it has a `main`; for a plugin: `botmaker plugin validate`'s checks pass, the jar's pom
+declares the plugin as the entry's coordinate, and JitPack serves the coordinate with a jar and pom that hash to the pins.
 
 ## Ranks
 

@@ -1,5 +1,4 @@
 {
-  "id" : "com.botmaker.sdk",
   "repo" : "BotMakerDev/botmaker-sdk",
   "releases" : [ {
     "tag" : "v1.5.0",

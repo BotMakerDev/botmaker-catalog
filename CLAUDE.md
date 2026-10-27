@@ -8,7 +8,8 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
 
 ## Entries are written by authors, catalog.json by index.yml only
 
-- An entry file holds only what its author decides (`repo`, `releases`, a plugin's `id`, a bot's `detached`). Every
+- An entry file holds only what its author decides (`repo`, `releases`, a bot's `detached`; a plugin's `id`
+  went on 2026-10-27, its pom's coordinate is the plugin and the file is `plugins/<owner>__<repo>.json`). Every
   other field of `catalog.json` is derived by `IndexCommand`. Never add a field to an entry that GitHub or the pom
   already answers; a release's pins (`commit`, a plugin's `jarSha256` and `pomSha256`) are the exception the check
   recomputes (2026-10-24, the user's call: the bytes approved are the bytes installed).
@@ -39,8 +40,8 @@ a cli release reaches open pull requests at their next run, accepted over keepin
   the read-only token and runs no entry code. The tools come from the base tree, never the pull request's. The
   kind step's GitHub calls are anonymous (60 an hour per runner), so a rate limit is a false refusal that a re-run
   clears — never a reason to give that step a token.
-- A plugin's constructor can end the kind step's JVM itself (`System.exit(0)`), skipping the plugin's id and
-  JitPack checks; Studio checks a loaded plugin's id against its entry (accepted 2026-10-23).
+- A plugin's constructor can end the kind step's JVM itself (`System.exit(0)`), skipping the checks after
+  it; Studio reads a plugin's coordinate off its jar's pom, never from its code (accepted 2026-10-23).
 - `automerge.yml` holds the write token, so it checks out only `main` and reads pull requests through the API as
   data (`tools/entry-facts.sh`); `ListingPolicy` is pure.
 - `index.yml` holds the write token and runs no entry code: GitHub's API and each pom read as data.

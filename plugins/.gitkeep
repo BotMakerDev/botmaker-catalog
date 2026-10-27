@@ -1,2 +1,2 @@
-# Entries live here, one per plugin, named by the plugin id. This file keeps the directory in git while
-# the registry is empty; delete it once there is a real entry.
+# Entries live here, one per plugin, named <owner>__<repo>.json like a bot's. This file keeps the directory in
+# git while the registry is empty; delete it once there is a real entry.

@@ -1,5 +1,4 @@
 {
-  "id" : "com.botmaker.basics",
   "repo" : "BotMakerDev/botmaker-plugin-basics",
   "releases" : [ {
     "tag" : "v0.4.0",

@@ -7,7 +7,7 @@ name: Validate
 #
 # THE ENTRY'S OWN CODE RUNS IN THE LAST STEP, and that step holds no token. A plugin's constructor runs in the
 # check's JVM and a bot is compiled with Maven, so EntryGate runs twice: `--part rules` (who controls the
-# repository, the release, the file) with the read-only token, then `--part kind` (the build, the plugin's id)
+# repository, the release, the file) with the read-only token, then `--part kind` (the build, the plugin's checks)
 # with none. The checkout keeps no credentials either (persist-credentials: false).
 #
 # The tools come from the BASE tree (main), never the pull request's: one that edits tools/ or a workflow still
