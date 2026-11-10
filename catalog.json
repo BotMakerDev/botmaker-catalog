@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 5,
-  "builtAt" : "2026-11-10T11:54:18Z",
+  "builtAt" : "2026-11-10T12:11:07Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -48,9 +48,20 @@
     "repo" : "BotMakerDev/botmaker-sdk",
     "rank" : "admin",
     "coordinate" : "com.github.BotMakerDev:botmaker-sdk",
-    "name" : "botmaker-sdk",
+    "name" : "BotMaker SDK",
     "stars" : 1,
     "releases" : [ {
+      "tag" : "v1.10.0",
+      "commit" : "ed950bebea771a23d6a740c07c99ac5ff05c008f",
+      "jarSha256" : "3324bb388ee0fe15049742d71aec106fd278074829c60eee03932990a07f789d",
+      "pomSha256" : "a45781f3b5f5d769eea248bd64ea4e721cb88fb96ca33da094c3a593d90fbb10",
+      "minContractVersion" : "v0.17.0",
+      "editorDependencies" : [ "io.javalin:javalin:6.7.0", "com.google.zxing:core:3.5.3" ],
+      "plugins" : [ {
+        "repo" : "BotMakerDev/botmaker-plugin-basics",
+        "version" : "v0.9.0"
+      } ]
+    }, {
       "tag" : "v1.7.1",
       "commit" : "271f1ac289cb67dca97ce535c9419783405f106f",
       "jarSha256" : "1254499d6952d0fbdc460fec191f3afae7b687f4823cfa5d818724d9153e2553",
