@@ -1,0 +1,8 @@
+{
+  "repo" : "LiQiyeDev/SwordXStaff",
+  "releases" : [ {
+    "tag" : "v0.1.1",
+    "commit" : "dc1865f57e6ad9373e8565140af6650efd430a5e",
+    "bmkSha256" : "aa72f78c58db7f8780a76c1a33b5ff4379ed5419409fba48d98d0c0f3d07e8b4"
+  } ]
+}
