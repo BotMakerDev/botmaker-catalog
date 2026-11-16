@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 5,
-  "builtAt" : "2026-11-13T16:54:33Z",
+  "builtAt" : "2026-11-16T15:06:52Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -8,6 +8,12 @@
     "name" : "BotMaker Basics",
     "stars" : 0,
     "releases" : [ {
+      "tag" : "v0.10.0",
+      "commit" : "cecf05c515a91fcc51a16c197b6612f74a5282a5",
+      "jarSha256" : "e0af548c10d506f5d9cb7060c452b11d590a35c1679ed8af7bcf64281cca8a12",
+      "pomSha256" : "e5522634e5f8689b08c179b281781272c34b5f80e7438599f6e8e22baf3e823d",
+      "minContractVersion" : "v0.18.0"
+    }, {
       "tag" : "v0.9.1",
       "commit" : "3b9783f117dedb1e68814906cc63317e0f36a3be",
       "jarSha256" : "683147317a1ff8c7808449a2bba5299c429d279b367b813524adbe1a303ff1d3",
