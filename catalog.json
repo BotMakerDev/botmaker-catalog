@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 5,
-  "builtAt" : "2026-11-17T00:15:38Z",
+  "builtAt" : "2026-11-20T21:50:12Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -131,25 +131,17 @@
     } ]
   } ],
   "bots" : [ {
-    "repo" : "LiQiyeDev/Firestone",
+    "repo" : "LiQiyeDev/SwordXStaff",
     "rank" : "admin",
-    "description" : "A BotMaker bot — saved from BotMaker Studio.",
-    "stars" : 0,
+    "stars" : 1,
     "releases" : [ {
-      "tag" : "1.0.4",
-      "commit" : "9795e38ee38d1c5678a902d14021de18e5f07716",
+      "tag" : "v0.1.2",
+      "commit" : "0cfcc848d62fd723e37024feb864cd63d4d9c39d",
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-sdk",
-        "version" : "v1.7.1"
+        "version" : "v1.11.0"
       } ],
-      "bmkSha256" : "9a4aacaa4c79198e4918c6dc43c07d7135894379b3f8ef5e1cad86d68434fb97"
-    }, {
-      "tag" : "1.0.0",
-      "commit" : "7f57eb0efd8e2fd12093facf8a6778e67287acd1",
-      "plugins" : [ {
-        "repo" : "BotMakerDev/botmaker-sdk",
-        "version" : "v1.6.0"
-      } ]
+      "bmkSha256" : "233d4ec88b447d3b55940e3c24b542b44f6fb149a10682f1a53542005abbe017"
     } ]
   } ]
 }
