@@ -16,8 +16,13 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
 - `releases` keeps every approved release, oldest first; a pull request creates the entry, appends one release,
   removes some or detaches a bot, never edits or reorders one (`EntryGate.Change`). There is no reading of the
   single `tag` the files held before 2026-10-24 (`docs/superpowers/specs/2026-10-24-easy-publish-design.md`).
-- `catalog.json` is the only file Studio reads, at `raw.githubusercontent.com/BotMakerDev/botmaker-catalog/main/
-  catalog.json` (`GitHubConfig.catalogRawUrls()` in shared). Its path never moves.
+- `catalog.json` stays at `raw.githubusercontent.com/BotMakerDev/botmaker-catalog/main/catalog.json`
+  (`GitHubConfig.catalogRawUrls()` in shared) for the website and other readers. Since 2026-11-21 Studio reads only
+  `catalog.signed.json` beside it (`catalogSignedRawUrls()`): its bytes and their Ed25519 signature in one file, which
+  `index.yml`'s Sign step writes (`tools/sign-catalog.sh`, the secret `CATALOG_SIGNING_KEY`) and the core verifies
+  against the public keys in its `catalog-keys.txt` (`CatalogSignature`). Ed25519, not sigstore: sigstore-java was
+  33 MB (the user's call). A new key is `tools/new-signing-key.sh`, run once its public line is in a released core;
+  the next index run signs with it. Neither path ever moves.
 - A pull request changes exactly one entry file, or `publishers.json` alone; everything else (`tools/`, a
   workflow) is the admin's, committed by hand.
 - **An admin may change anyone's entry, and only an admin changes `publishers.json`** (2026-10-23, the dashboard's
