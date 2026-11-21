@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BotMakerDev/botmaker-catalog/schema/entry.json",
+  "title": "A catalog entry",
+  "description": "One file of bots/ or plugins/, named owner__name.json. The machine check (botmaker-cli's EntryGate) is the authority; this schema describes the file's shape only.",
+  "anyOf": [
+    { "$ref": "#/$defs/bot" },
+    { "$ref": "#/$defs/plugin" }
+  ],
+  "$defs": {
+    "slug": {
+      "description": "owner/name on GitHub.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9._-]{1,100}$"
+    },
+    "tag": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_][A-Za-z0-9._+-]{0,99}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "formerly": {
+      "description": "The slugs the repository had before GitHub renamed or transferred it, oldest first; left out when it never moved.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/slug" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "yanked": {
+      "description": "Why and when the release was pulled. Studio no longer offers it, and warns whoever is on it.",
+      "type": "object",
+      "properties": {
+        "reason": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reason", "at"],
+      "additionalProperties": false
+    },
+    "botRelease": {
+      "type": "object",
+      "properties": {
+        "tag": { "$ref": "#/$defs/tag" },
+        "commit": { "$ref": "#/$defs/commit" },
+        "bmkSha256": { "$ref": "#/$defs/sha256", "description": "The sha256 of the release's .bmk; left out for a release that has none." },
+        "yanked": { "$ref": "#/$defs/yanked" }
+      },
+      "required": ["tag", "commit"],
+      "additionalProperties": false
+    },
+    "pluginRelease": {
+      "type": "object",
+      "properties": {
+        "tag": { "$ref": "#/$defs/tag" },
+        "commit": { "$ref": "#/$defs/commit" },
+        "jarSha256": { "$ref": "#/$defs/sha256" },
+        "pomSha256": { "$ref": "#/$defs/sha256" },
+        "yanked": { "$ref": "#/$defs/yanked" }
+      },
+      "required": ["tag", "commit", "jarSha256", "pomSha256"],
+      "additionalProperties": false
+    },
+    "bot": {
+      "title": "A bot's entry (bots/)",
+      "type": "object",
+      "properties": {
+        "repo": { "$ref": "#/$defs/slug" },
+        "releases": {
+          "description": "Every approved release, oldest first, each tag once.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/botRelease" },
+          "minItems": 1
+        },
+        "detached": { "description": "The bot no longer names its upstream; left out when false.", "const": true },
+        "formerly": { "$ref": "#/$defs/formerly" }
+      },
+      "required": ["repo", "releases"],
+      "additionalProperties": false
+    },
+    "plugin": {
+      "title": "A plugin's entry (plugins/)",
+      "type": "object",
+      "properties": {
+        "repo": { "$ref": "#/$defs/slug" },
+        "releases": {
+          "description": "Every approved release, oldest first, each tag once.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/pluginRelease" },
+          "minItems": 1
+        },
+        "formerly": { "$ref": "#/$defs/formerly" }
+      },
+      "required": ["repo", "releases"],
+      "additionalProperties": false
+    }
+  }
+}

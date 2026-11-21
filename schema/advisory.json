@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BotMakerDev/botmaker-catalog/schema/advisory.json",
+  "title": "A security advisory",
+  "description": "One file of advisories/, named <id>.json, filed by an admin only. A later change only appends releases or withdraws it; it is never deleted. The machine check (botmaker-cli's EntryGate) is the authority; this schema describes the file's shape only.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "BMA-<year>-<4 digits>, in sequence per year, and the file's name.",
+      "type": "string",
+      "pattern": "^BMA-[0-9]{4}-[0-9]{4}$"
+    },
+    "repo": {
+      "description": "The entry's owner/name, or one it had formerly.",
+      "$ref": "entry.json#/$defs/slug"
+    },
+    "releases": {
+      "description": "The affected tags, each an approved release of the entry.",
+      "type": "array",
+      "items": { "$ref": "entry.json#/$defs/tag" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "severity": { "enum": ["low", "medium", "high", "critical"] },
+    "summary": {
+      "description": "Shown whole in Studio's refusal.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "url": {
+      "description": "Where the problem is described; left out for none.",
+      "type": "string",
+      "pattern": "^https://[^\\s\"<>]{1,500}$"
+    },
+    "published": {
+      "description": "The day it was filed.",
+      "type": "string",
+      "format": "date"
+    },
+    "withdrawn": {
+      "description": "Why it no longer holds; left out while it does.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    }
+  },
+  "required": ["id", "repo", "releases", "severity", "summary", "published"],
+  "additionalProperties": false
+}

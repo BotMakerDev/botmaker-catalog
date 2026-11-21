@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BotMakerDev/botmaker-catalog/schema/catalog.json",
+  "title": "The generated catalog",
+  "description": "catalog.json as index.yml writes it (botmaker-cli's IndexCommand), schema version 6; catalog.signed.json carries these bytes as its payload. Readers ignore fields they do not know.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "builtAt": { "type": "string", "format": "date-time" },
+    "plugins": { "type": "array", "items": { "$ref": "#/$defs/plugin" } },
+    "bots": { "type": "array", "items": { "$ref": "#/$defs/bot" } },
+    "advisories": {
+      "description": "The advisories not withdrawn; left out when there are none.",
+      "type": "array",
+      "items": { "$ref": "advisory.json" }
+    }
+  },
+  "required": ["schemaVersion", "builtAt", "plugins", "bots"],
+  "additionalProperties": false,
+  "$defs": {
+    "rank": { "enum": ["admin", "trusted", "community"] },
+    "time": { "type": "string", "format": "date-time" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "pin": {
+      "description": "A catalog plugin a pom declares, named by its entry's owner/name, at the version it pins.",
+      "type": "object",
+      "properties": {
+        "repo": { "$ref": "entry.json#/$defs/slug" },
+        "version": { "type": "string" }
+      },
+      "required": ["repo", "version"],
+      "additionalProperties": false
+    },
+    "plugin": {
+      "type": "object",
+      "properties": {
+        "repo": { "$ref": "entry.json#/$defs/slug" },
+        "rank": { "$ref": "#/$defs/rank" },
+        "coordinate": { "description": "groupId:artifactId, the plugin's identity.", "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": { "$ref": "#/$defs/tags" },
+        "stars": { "type": "integer", "minimum": 0 },
+        "releases": { "type": "array", "items": { "$ref": "#/$defs/pluginRelease" }, "minItems": 1 },
+        "updatedAt": { "$ref": "#/$defs/time" },
+        "formerly": { "$ref": "entry.json#/$defs/formerly" }
+      },
+      "required": ["repo", "rank", "stars", "releases"],
+      "additionalProperties": false
+    },
+    "pluginRelease": {
+      "type": "object",
+      "properties": {
+        "tag": { "$ref": "entry.json#/$defs/tag" },
+        "commit": { "$ref": "entry.json#/$defs/commit" },
+        "jarSha256": { "$ref": "entry.json#/$defs/sha256" },
+        "pomSha256": { "$ref": "entry.json#/$defs/sha256" },
+        "minContractVersion": { "description": "The oldest contract its pom accepts.", "type": "string" },
+        "editorDependencies": {
+          "description": "groupId:artifactId:version it needs on the editor's classpath.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "plugins": { "type": "array", "items": { "$ref": "#/$defs/pin" } },
+        "publishedAt": { "$ref": "#/$defs/time" },
+        "yanked": { "$ref": "entry.json#/$defs/yanked" }
+      },
+      "required": ["tag", "commit", "jarSha256", "pomSha256"],
+      "additionalProperties": false
+    },
+    "bot": {
+      "type": "object",
+      "properties": {
+        "repo": { "$ref": "entry.json#/$defs/slug" },
+        "rank": { "$ref": "#/$defs/rank" },
+        "description": { "type": "string" },
+        "tags": { "$ref": "#/$defs/tags" },
+        "stars": { "type": "integer", "minimum": 0 },
+        "forkOf": { "$ref": "entry.json#/$defs/slug" },
+        "releases": { "type": "array", "items": { "$ref": "#/$defs/botRelease" }, "minItems": 1 },
+        "updatedAt": { "$ref": "#/$defs/time" },
+        "downloads": {
+          "description": "The sum of its releases' downloads; left out when none has a count.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "formerly": { "$ref": "entry.json#/$defs/formerly" }
+      },
+      "required": ["repo", "rank", "stars", "releases"],
+      "additionalProperties": false
+    },
+    "botRelease": {
+      "type": "object",
+      "properties": {
+        "tag": { "$ref": "entry.json#/$defs/tag" },
+        "commit": { "$ref": "entry.json#/$defs/commit" },
+        "plugins": { "type": "array", "items": { "$ref": "#/$defs/pin" } },
+        "bmkSha256": { "$ref": "entry.json#/$defs/sha256" },
+        "publishedAt": { "$ref": "#/$defs/time" },
+        "downloads": {
+          "description": "Its .bmk's GitHub download count; left out for a release with no .bmk.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "platforms": {
+          "description": "The systems its pom names (botmaker.platforms); left out means every one.",
+          "type": "array",
+          "items": { "enum": ["linux", "windows", "macos"] },
+          "uniqueItems": true
+        },
+        "yanked": { "$ref": "entry.json#/$defs/yanked" }
+      },
+      "required": ["tag", "commit"],
+      "additionalProperties": false
+    }
+  }
+}
