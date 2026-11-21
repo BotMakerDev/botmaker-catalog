@@ -30,7 +30,7 @@ stay listed. Install the CLI from [botmaker-cli](https://github.com/BotMakerDev/
 
 ```
 bots/<owner>__<repo>.json   { "repo": "owner/name", "releases": [{ "tag": "v1.2.0", "commit": "<sha>" }] },
-                            optionally "detached": true
+                            optionally "detached": true; either kind optionally "formerly": ["old/slug", …]
 plugins/<owner>__<repo>.json { "repo": "owner/name",
                               "releases": [{ "tag": "v0.3.0", "commit": "<sha>",
                                              "jarSha256": "<hex>", "pomSha256": "<hex>" }] }
@@ -54,7 +54,9 @@ JitPack serves as `com.github.<owner>:<repo>`, is the plugin.
 
 `validate.yml` resolves `com.github.BotMakerDev:botmaker-cli` at its newest GitHub Release and runs `com.botmaker.cli.catalog.EntryGate`. A pull request passes when:
 
-1. it changes exactly one entry file, added, changed or removed;
+1. it changes exactly one entry file, added, changed or removed — or moves one after GitHub renamed or transferred
+   its repository: the old file gone, the new one with `repo` the new slug and the old one appended to
+   `formerly`, both slugs one repository on GitHub (the nightly index makes this move itself);
 2. the file's name is what its content names, the JSON is the schema above, and the change creates the entry with
    one release, appends one release, removes some releases (the rest kept in order) or sets a bot's `detached` —
    an approved release is never edited or reordered;

@@ -47,7 +47,7 @@ admin="$(gh api "repos/$repo/contents/publishers.json?ref=main" --jq .content 2>
 [ "$admin" = true ] || admin=false
 
 changes="$(gh api --paginate "repos/$repo/pulls/$pr/files?per_page=100" \
-    --jq '.[] | {path: .filename, status: .status}' | jq -s -c '.')"
+    --jq '.[] | {path: .filename, status: .status, previous: .previous_filename}' | jq -s -c '.')"
 
 # One timestamp per NEW entry the author had merged in the last 24 hours, bots and plugins alike. Pull requests
 # rather than commits, because a pull request's author is a login and a commit's is only an email.

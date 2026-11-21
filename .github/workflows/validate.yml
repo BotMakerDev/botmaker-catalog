@@ -47,7 +47,8 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           mkdir -p target
-          git diff --name-only "$BASE_SHA" HEAD > target/changed.txt
+          # --no-renames: a moved entry (EntryGate's Move) is both its paths, the one removed and the one added.
+          git diff --no-renames --name-only "$BASE_SHA" HEAD > target/changed.txt
           cat target/changed.txt
           git worktree add --detach target/base "$BASE_SHA"
 

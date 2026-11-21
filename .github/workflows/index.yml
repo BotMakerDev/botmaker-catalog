@@ -47,18 +47,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: java -cp "$(cat "$RUNNER_TEMP/cli-classpath.txt")" com.botmaker.cli.catalog.IndexCommand .
 
-      # `git diff --quiet` rather than committing unconditionally: a no-op commit every night would make the
+      # `git status` rather than committing unconditionally: a no-op commit every night would make the
       # file's history say nothing about when the catalog actually changed. Pulled first because two merges can
-      # land while this runs.
+      # land while this runs. An entry whose repository GitHub renamed or transferred was moved to its new file
+      # by IndexCommand (its `formerly` naming the old slug), proven by the repository's id, and is committed
+      # with the catalog: a pull request opened with this token would start no check (2026-11-21).
       - name: Commit if it changed
         run: |
-          if [ -z "$(git status --porcelain -- catalog.json)" ]; then
+          if [ -z "$(git status --porcelain -- catalog.json bots plugins)" ]; then
             echo "catalog.json is already up to date."
             exit 0
           fi
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add catalog.json
-          git commit -m "catalog: regenerate catalog.json"
+          git add -A -- catalog.json bots plugins
+          if git diff --cached --quiet -- bots plugins; then
+            git commit -m "catalog: regenerate catalog.json"
+          else
+            git commit -m "catalog: follow renamed repositories, regenerate catalog.json"
+          fi
           git pull --rebase
           git push
