@@ -23,8 +23,12 @@ This is a **data repository**: no pom, not in the umbrella's reactor, nothing he
   against the public keys in its `catalog-keys.txt` (`CatalogSignature`). Ed25519, not sigstore: sigstore-java was
   33 MB (the user's call). A new key is `tools/new-signing-key.sh`, run once its public line is in a released core;
   the next index run signs with it. Neither path ever moves.
-- A pull request changes exactly one entry file, or `publishers.json` alone; everything else (`tools/`, a
-  workflow) is the admin's, committed by hand.
+- A pull request changes exactly one entry file, or `publishers.json` alone, or one advisory file; everything else
+  (`tools/`, a workflow) is the admin's, committed by hand.
+- **An advisory is `advisories/<id>.json`** (2026-11-21, spec `2026-11-21-catalog-trust-design.md` § 5): only an admin
+  files one (`botmaker advisory new`), ids `BMA-<year>-<NNNN>` in sequence per year, `repo` an entry's slug or one of
+  its `formerly`, every tag an approved release. A change only appends releases or withdraws it; an advisory is never
+  deleted. `catalog.json` lists the active ones; the core refuses a named release until the user's *Run anyway*.
 - **An admin may change anyone's entry, and only an admin changes `publishers.json`** (2026-10-23, the dashboard's
   edits): an admin is the pull request author's account id among `admin` in main's `publishers.json`
   (`--author-id`), never a login. Rules 3 and 4 pass for an admin; the release must still be published and the

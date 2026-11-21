@@ -16,6 +16,7 @@ on:
     paths:
       - 'bots/**'
       - 'plugins/**'
+      - 'advisories/**'
       - 'publishers.json'
   schedule:
     - cron: '41 3 * * *'

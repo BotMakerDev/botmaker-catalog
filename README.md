@@ -67,6 +67,9 @@ JitPack serves as `com.github.<owner>:<repo>`, is the plugin.
 4. an existing entry changes or goes only by whoever controls the repository the catalog holds today;
 5. the approved release is published, not a draft or a prerelease, and its tag points at the pinned commit;
 
+(A security advisory, `advisories/BMA-<year>-<NNNN>.json`, is a pull request of its own: an admin files it with
+`botmaker advisory new`, then may only append releases to it or withdraw it. It is never deleted.)
+
 and, on the approved release only, for a bot: its pom at the pinned commit declares a catalog plugin at a released
 version, it compiles, and it has a `main`; for a plugin: `botmaker plugin validate`'s checks pass, the jar's pom
 declares the plugin as the entry's coordinate, and JitPack serves the coordinate with a jar and pom that hash to the pins.
