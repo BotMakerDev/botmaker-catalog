@@ -1,6 +1,6 @@
 {
-  "schemaVersion" : 5,
-  "builtAt" : "2026-11-22T01:06:52Z",
+  "schemaVersion" : 6,
+  "builtAt" : "2026-11-23T13:35:55Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -12,62 +12,73 @@
       "commit" : "3d9bac44e9f473840cf7e49840328308253a6a21",
       "jarSha256" : "ce8f6cd54fd9d86d2ce07c8decc59f71194044edfcde0bb212e4fcfde44259df",
       "pomSha256" : "5547bff96b9e4949fe55632598fc0f3cc4d36e2cb44673afac984da520590f3c",
-      "minContractVersion" : "v0.19.1"
+      "minContractVersion" : "v0.19.1",
+      "publishedAt" : "2026-11-22T01:04:17Z"
     }, {
       "tag" : "v0.11.0",
       "commit" : "56d4ce95b2922876d3ded1fe013c7bf28269a83b",
       "jarSha256" : "55f3822146f80e62cafa018b4de18d06d1364955ef5c4a078e58907eb35c0624",
       "pomSha256" : "a29b1be61c54612373ceaa6becc238c9e00e137b2e6568b27212f94f877575a5",
-      "minContractVersion" : "v0.19.0"
+      "minContractVersion" : "v0.19.0",
+      "publishedAt" : "2026-11-21T00:52:18Z"
     }, {
       "tag" : "v0.10.0",
       "commit" : "cecf05c515a91fcc51a16c197b6612f74a5282a5",
       "jarSha256" : "e0af548c10d506f5d9cb7060c452b11d590a35c1679ed8af7bcf64281cca8a12",
       "pomSha256" : "e5522634e5f8689b08c179b281781272c34b5f80e7438599f6e8e22baf3e823d",
-      "minContractVersion" : "v0.18.0"
+      "minContractVersion" : "v0.18.0",
+      "publishedAt" : "2026-11-16T15:01:13Z"
     }, {
       "tag" : "v0.9.1",
       "commit" : "3b9783f117dedb1e68814906cc63317e0f36a3be",
       "jarSha256" : "683147317a1ff8c7808449a2bba5299c429d279b367b813524adbe1a303ff1d3",
       "pomSha256" : "b496cb04dc1b553e70fe409df7bb325d6b8cff3e28507b907b1c4c7592b2aa68",
-      "minContractVersion" : "v0.17.1"
+      "minContractVersion" : "v0.17.1",
+      "publishedAt" : "2026-11-13T16:50:38Z"
     }, {
       "tag" : "v0.9.0",
       "commit" : "675c409d805324c1e1aa4ca0073f74f9d8b8f3e7",
       "jarSha256" : "f8339e8e880405b4296956a8d438cf94ca9c880c4735674f3565d2a78a4a5d7e",
       "pomSha256" : "532f49f8d8fd1778234d752693b7b0ea11336503563724daa35a32dcd44edba9",
-      "minContractVersion" : "v0.17.0"
+      "minContractVersion" : "v0.17.0",
+      "publishedAt" : "2026-11-10T11:51:15Z"
     }, {
       "tag" : "v0.8.1",
       "commit" : "26f856958098b793b5fb9d09dc9ebfe35db4143e",
       "jarSha256" : "cd7d6acc7b4e160fa23ddb75ec567096e4ac6385b835324166f94da9560d56aa",
       "pomSha256" : "ad344081fe296dbaa5a3ee2775bae4f45374132b6ede16862db77dee940af344",
-      "minContractVersion" : "v0.14.1"
+      "minContractVersion" : "v0.14.1",
+      "publishedAt" : "2026-11-01T02:19:56Z"
     }, {
       "tag" : "v0.8.0",
       "commit" : "5c6cb2593a992880dd1f246b146044abbf39bfb6",
       "jarSha256" : "a27ef9df248de01746698d11232346235aa9e352141078984e61aa63c641b609",
       "pomSha256" : "5c7cd1afa4666791f6bcfda9f8a08e3cb8ddc2e0bfca8e5d721d847993269cdc",
-      "minContractVersion" : "v0.14.0"
+      "minContractVersion" : "v0.14.0",
+      "publishedAt" : "2026-10-31T23:41:13Z"
     }, {
       "tag" : "v0.6.0",
       "commit" : "7cc290d23d9f31872da6bfeff6ef4508c80141de",
       "jarSha256" : "d0c6dbfb8db0949edcaf36b143d04c471b89f4877a97139d1a240a354283e632",
       "pomSha256" : "29edabf6b4ff4a9935d18b2164b3bcf0b71ea7353bf1d827ae043e108310345f",
-      "minContractVersion" : "v0.12.0"
+      "minContractVersion" : "v0.12.0",
+      "publishedAt" : "2026-10-25T04:21:57Z"
     }, {
       "tag" : "v0.5.0",
       "commit" : "e69dac8fdcb0196b42f8521edac88be682dde06e",
       "jarSha256" : "8ca569dc9791a0427e47b6fa58f525fb5b0575556420dee49ecd64a36c759c0e",
       "pomSha256" : "aff5dd9a4d955006e6dee96e524cd12dd1dacd0997cd9ec5eec372b76f1d9447",
-      "minContractVersion" : "v0.11.0"
+      "minContractVersion" : "v0.11.0",
+      "publishedAt" : "2026-10-23T20:26:33Z"
     }, {
       "tag" : "v0.4.0",
       "commit" : "de3473b9fd1387e2066d3712bf01de1746949a93",
       "jarSha256" : "0db3bdca32d230665f3dd1632e381d29ae64ed98c3cbd37480533ca00331531b",
       "pomSha256" : "83d7602804adb0ae37661375bfd495d9d288b3416684b10d5e59e70b3c509f18",
-      "minContractVersion" : "v0.10.0"
-    } ]
+      "minContractVersion" : "v0.10.0",
+      "publishedAt" : "2026-10-18T17:13:09Z"
+    } ],
+    "updatedAt" : "2026-11-22T01:04:17Z"
   }, {
     "repo" : "BotMakerDev/botmaker-sdk",
     "rank" : "admin",
@@ -84,7 +95,8 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.10.0"
-      } ]
+      } ],
+      "publishedAt" : "2026-11-16T15:09:32Z"
     }, {
       "tag" : "v1.10.0",
       "commit" : "ed950bebea771a23d6a740c07c99ac5ff05c008f",
@@ -95,7 +107,8 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.9.0"
-      } ]
+      } ],
+      "publishedAt" : "2026-11-10T11:56:08Z"
     }, {
       "tag" : "v1.7.1",
       "commit" : "271f1ac289cb67dca97ce535c9419783405f106f",
@@ -106,7 +119,8 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.6.0"
-      } ]
+      } ],
+      "publishedAt" : "2026-10-25T19:14:43Z"
     }, {
       "tag" : "v1.7.0",
       "commit" : "14a81915d1cfa4f50b87f8e8861992bbfb4a2fcd",
@@ -117,7 +131,8 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.6.0"
-      } ]
+      } ],
+      "publishedAt" : "2026-10-25T04:23:57Z"
     }, {
       "tag" : "v1.6.0",
       "commit" : "675d1e29e8d0d0726a0ffdf85797a8f3585b3b33",
@@ -128,7 +143,8 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.5.0"
-      } ]
+      } ],
+      "publishedAt" : "2026-10-23T20:30:13Z"
     }, {
       "tag" : "v1.5.0",
       "commit" : "8aea5e75b92bced769891f75e43c13cf557a3eb3",
@@ -139,8 +155,10 @@
       "plugins" : [ {
         "repo" : "BotMakerDev/botmaker-plugin-basics",
         "version" : "v0.4.0"
-      } ]
-    } ]
+      } ],
+      "publishedAt" : "2026-10-18T17:16:44Z"
+    } ],
+    "updatedAt" : "2026-11-16T15:09:32Z"
   } ],
   "bots" : [ {
     "repo" : "LiQiyeDev/SwordXStaff",
@@ -153,7 +171,11 @@
         "repo" : "BotMakerDev/botmaker-sdk",
         "version" : "v1.11.0"
       } ],
-      "bmkSha256" : "233d4ec88b447d3b55940e3c24b542b44f6fb149a10682f1a53542005abbe017"
-    } ]
+      "bmkSha256" : "233d4ec88b447d3b55940e3c24b542b44f6fb149a10682f1a53542005abbe017",
+      "publishedAt" : "2026-11-20T21:47:07Z",
+      "downloads" : 7
+    } ],
+    "updatedAt" : "2026-11-20T21:47:07Z",
+    "downloads" : 7
   } ]
 }
