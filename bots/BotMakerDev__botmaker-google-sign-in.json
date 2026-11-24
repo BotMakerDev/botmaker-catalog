@@ -1,0 +1,8 @@
+{
+  "repo" : "BotMakerDev/botmaker-google-sign-in",
+  "releases" : [ {
+    "tag" : "v0.1.0",
+    "commit" : "1565998dd54fb03891ecf7805883803fae604b69",
+    "bmkSha256" : "fc4a229284f128e817e33830b23b60a1ed63e7731d020eafcc50ec83c2dbf0b0"
+  } ]
+}
