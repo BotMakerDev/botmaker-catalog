@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 6,
-  "builtAt" : "2026-11-24T03:23:06Z",
+  "builtAt" : "2026-11-24T15:11:34Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -168,6 +168,24 @@
     "updatedAt" : "2026-11-16T15:09:32Z"
   } ],
   "bots" : [ {
+    "repo" : "BotMakerDev/botmaker-google-sign-in",
+    "rank" : "admin",
+    "description" : "Signs an emulator instance into one Google account, BotMaker's host typing every value.",
+    "stars" : 0,
+    "releases" : [ {
+      "tag" : "v0.1.0",
+      "commit" : "1565998dd54fb03891ecf7805883803fae604b69",
+      "plugins" : [ {
+        "repo" : "BotMakerDev/botmaker-sdk",
+        "version" : "1.12.2"
+      } ],
+      "bmkSha256" : "fc4a229284f128e817e33830b23b60a1ed63e7731d020eafcc50ec83c2dbf0b0",
+      "publishedAt" : "2026-11-24T15:08:08Z",
+      "downloads" : 0
+    } ],
+    "updatedAt" : "2026-11-24T15:08:08Z",
+    "downloads" : 0
+  }, {
     "repo" : "LiQiyeDev/SwordXStaff",
     "rank" : "admin",
     "stars" : 1,
