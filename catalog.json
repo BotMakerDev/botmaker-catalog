@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 6,
-  "builtAt" : "2026-11-26T13:05:35Z",
+  "builtAt" : "2026-11-27T13:03:27Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -181,10 +181,10 @@
       } ],
       "bmkSha256" : "fc4a229284f128e817e33830b23b60a1ed63e7731d020eafcc50ec83c2dbf0b0",
       "publishedAt" : "2026-11-24T15:08:08Z",
-      "downloads" : 5
+      "downloads" : 6
     } ],
     "updatedAt" : "2026-11-24T15:08:08Z",
-    "downloads" : 5
+    "downloads" : 6
   }, {
     "repo" : "LiQiyeDev/SwordXStaff",
     "rank" : "admin",
@@ -198,9 +198,9 @@
       } ],
       "bmkSha256" : "233d4ec88b447d3b55940e3c24b542b44f6fb149a10682f1a53542005abbe017",
       "publishedAt" : "2026-11-20T21:47:07Z",
-      "downloads" : 11
+      "downloads" : 12
     } ],
     "updatedAt" : "2026-11-20T21:47:07Z",
-    "downloads" : 11
+    "downloads" : 12
   } ]
 }
