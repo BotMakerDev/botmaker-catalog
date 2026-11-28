@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 6,
-  "builtAt" : "2026-11-27T13:03:27Z",
+  "builtAt" : "2026-11-28T12:16:16Z",
   "plugins" : [ {
     "repo" : "BotMakerDev/botmaker-plugin-basics",
     "rank" : "admin",
@@ -8,6 +8,13 @@
     "name" : "BotMaker Basics",
     "stars" : 0,
     "releases" : [ {
+      "tag" : "v0.12.0",
+      "commit" : "1d4761f422fad4215138fa88f43575be40d6f08e",
+      "jarSha256" : "841f8e701782c1ce8be46b46f370303856504e90c37b5fd419df9d47461377d0",
+      "pomSha256" : "f10768048cb96aa971727b565dc9806bc842e0f18405ea536498f79fb5e621c1",
+      "minContractVersion" : "v0.21.0",
+      "publishedAt" : "2026-11-27T16:09:31Z"
+    }, {
       "tag" : "v0.11.2",
       "commit" : "4dcba6c61622a56281804851642618321c631fbd",
       "jarSha256" : "98fb09441602172e579755b34400803767d0273b5d13b1cc3c16ebfa0da5683e",
@@ -85,7 +92,7 @@
       "minContractVersion" : "v0.10.0",
       "publishedAt" : "2026-10-18T17:13:09Z"
     } ],
-    "updatedAt" : "2026-11-24T03:20:12Z"
+    "updatedAt" : "2026-11-27T16:09:31Z"
   }, {
     "repo" : "BotMakerDev/botmaker-sdk",
     "rank" : "admin",
@@ -181,10 +188,10 @@
       } ],
       "bmkSha256" : "fc4a229284f128e817e33830b23b60a1ed63e7731d020eafcc50ec83c2dbf0b0",
       "publishedAt" : "2026-11-24T15:08:08Z",
-      "downloads" : 6
+      "downloads" : 8
     } ],
     "updatedAt" : "2026-11-24T15:08:08Z",
-    "downloads" : 6
+    "downloads" : 8
   }, {
     "repo" : "LiQiyeDev/SwordXStaff",
     "rank" : "admin",
@@ -198,9 +205,9 @@
       } ],
       "bmkSha256" : "233d4ec88b447d3b55940e3c24b542b44f6fb149a10682f1a53542005abbe017",
       "publishedAt" : "2026-11-20T21:47:07Z",
-      "downloads" : 12
+      "downloads" : 14
     } ],
     "updatedAt" : "2026-11-20T21:47:07Z",
-    "downloads" : 12
+    "downloads" : 14
   } ]
 }
